@@ -1,0 +1,18 @@
+# to start the virtual environment:
+. venv/bin/activate
+
+# to stop the virtual environment:
+deactivate
+
+# to install requirements on virtual environment (make sure you're in the virtual environment!)
+pip3 install -r requirements.txt
+
+# to start the flask application server locally:
+flask run
+
+# to stop the flask application server: ctrl + c
+
+# in case you get 'Error: Could not locate a Flask application', you don't have
+# the environment variables set:
+export FLASK_APP=application.py
+set FLASK_APP=application.py
