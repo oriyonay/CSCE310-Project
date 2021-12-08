@@ -1,5 +1,6 @@
 # .DS_STORE file on mac:
 .DS_Store
+*/.DS_Store
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
