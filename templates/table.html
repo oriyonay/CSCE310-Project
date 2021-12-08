@@ -9,15 +9,13 @@
 
     <body>
         <div class='wrapper'>
+          <div class='container'>
             <center><h1>BookSmart</h1></center>
             <center>
-              <div class="form__group field">
-                <form action="{{ url_for('search') }}" method="post">
-                  <input type="input" class="form__field" placeholder="Enter a book name" name="name" id='name' required />
-                  <label for="name" class="form__label">Enter a book name...</label>
-                  <input type="submit" style="display: none"/>
-                </form>
-                </div>
+              <form action="{{ url_for('search') }}" method="post" role="search">
+                <input class="form__field" name="name" id="name" placeholder="Enter a book title..." required />
+                <input type="submit" style="display: none"/>
+              </form>
             </center>
             {% if render_table %}
             <center><table class='table'>
@@ -36,5 +34,6 @@
             </table></center>
             {% endif %}
         </div>
+      </div>
     </body>
 </html>

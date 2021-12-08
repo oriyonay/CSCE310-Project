@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 import psycopg2
 
 # ---------- DATABASE CONSTANTS ---------- #
@@ -6,9 +6,11 @@ import psycopg2
 TABLE_NAME = 'books'
 
 # connect to the database with *the same* connection:
+'''
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
+'''
 
 # ---------- END OF DATABASE CONSTANTS ---------- #
 
