@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'/>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+        <link rel='stylesheet' href='/static/styles.css'/>
+        <title>BookSmart</title>
+    </head>
+
+    <body>
+        <div class='wrapper'>
+            <center><h1>BookSmart</h1></center>
+            <center>
+              <form action="{{ url_for('search') }}" method="post">
+                <input type="input" class="form__field" placeholder="Enter a book name" name="name" id='name' required />
+                <label for="name" class="form__label">Enter a book name...</label>
+                <input type="submit" style="display: none"/>
+              </form>
+            </center>
+            <h2>TEST: you searched for {% name %}</h2>
+        </div>
+    </body>
+</html>

@@ -11,13 +11,13 @@
         <div class='wrapper'>
             <center><h1>BookSmart</h1></center>
             <center>
-                <form method='POST'>
-                    <div class="form__group field">
-                        <input type="input" class="form__field" placeholder="Enter a book name" name="name" id='name' required />
-                        <label for="name" class="form__label">Enter a book name...</label>
-                        <input type="submit" style="display: none"/>
-                    </div>
+              <div class="form__group field">
+                <form action="{{ url_for('search') }}" method="post">
+                  <input type="input" class="form__field" placeholder="Enter a book name" name="name" id='name' required />
+                  <label for="name" class="form__label">Enter a book name...</label>
+                  <input type="submit" style="display: none"/>
                 </form>
+                </div>
             </center>
             {% if render_table %}
             <center><table class='table'>

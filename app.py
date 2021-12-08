@@ -2,12 +2,13 @@ from flask import Flask, render_template
 import psycopg2
 
 # ---------- DATABASE CONSTANTS ---------- #
-TABLE_NAME = 'test'
 
-DB_NAME = 'dbname'
-DB_USER = 'username'
-DB_PASS = 'password'
-DB_HOST = 'localhost'
+TABLE_NAME = 'books'
+
+# connect to the database with *the same* connection:
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cur = conn.cursor()
 
 # ---------- END OF DATABASE CONSTANTS ---------- #
 
@@ -23,6 +24,12 @@ def hello():
     # for now, just return the dummy page:
     return get_data()
 
+@app.route('/search', methods=['POST'])
+def search():
+    name = request.form.get('name')
+
+    return render_template('book.html', name=name)
+
 @app.route('/<some_param>')
 def get_data():
     # example of getting data from the database:
@@ -35,16 +42,6 @@ def get_data():
 
 # setup: function to set the database up
 def setup(table_name):
-    # connect to the database:
-    try:
-        conn = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s'" %
-                    (DB_NAME, DB_USER, DB_HOST, DB_PASS))
-        cur = conn.cursor()
-    except:
-        # log the error (will show up on log)
-        print('unable to connect to the database.')
-        return False
-
     # the CREATE TABLE command:
     # (NOTE: isbn and isbn13 are VARCHAR beause INT type removes leading zeros
     create_command = 'CREATE TABLE %s ('\
