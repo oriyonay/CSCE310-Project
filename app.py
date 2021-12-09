@@ -32,6 +32,7 @@ def search():
 
     return render_template('book.html', name=name)
 
+'''
 @app.route('/<some_param>')
 def get_data():
     # example of getting data from the database:
@@ -41,37 +42,4 @@ def get_data():
     attributes = ['a1', 'a2']
     data = [['c1', 'c2'], ['c3', 'c4']]
     return render_template('table.html', render_table=False, attributes=attributes, data=data)
-
-# setup: function to set the database up
-def setup(table_name):
-    # the CREATE TABLE command:
-    # (NOTE: isbn and isbn13 are VARCHAR beause INT type removes leading zeros
-    create_command = 'CREATE TABLE %s ('\
-        'bookID INT PRIMARY KEY,'\
-        'title VARCHAR,'\
-        'authors VARCHAR,'\
-        'average_rating DECIMAL,'\
-        'isbn VARCHAR,'\
-        'isbn13 VARCHAR,'\
-        'language_code VARCHAR,'\
-        'num_pages INTEGER,'\
-        'ratings_count INTEGER,'\
-        'text_reviews_count INTEGER,'\
-        'publication_date DATE,'\
-        'publisher VARCHAR'\
-        ');' % (table_name)
-
-    # generate the insert commands:
-    from scripts import generate_insert_commands as gic
-    insert_commands = gic.generate_insert_commands(table_name=table_name)
-
-    # execute the commands:
-    cur.execute(create_command)
-    print('successfully created table %s' % table_name)
-
-    for insert_command in insert_commands:
-        cur.execute(insert_command)
-    print('successfully inserted all %d rows to %s' % (len(insert_commands), table_name))
-
-    print('successfully set up table %s' % table_name)
-    return True
+'''
