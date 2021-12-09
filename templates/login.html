@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'/>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+        <link rel='stylesheet' href='/static/styles.css'/>
+        <title>BookSmart</title>
+    </head>
+
+    <body>
+        <div class='wrapper'>
+          <div class='container'>
+            <center>
+              <h1>BookSmart</h1>
+              <h2>Log In</h2>
+            </center>
+            <center>
+              <form action="{{ url_for('authenticate') }}" method="post">
+                <input class="form__field" name="email" id="email" placeholder="Email" required />
+                <input class="form__field" name="password" id="password" type="password" placeholder="Password" required />
+                <input type="submit" style="display: none"/>
+              </form>
+            </center>
+        </div>
+      </div>
+    </body>
+</html>

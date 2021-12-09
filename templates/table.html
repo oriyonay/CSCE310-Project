@@ -10,7 +10,9 @@
     <body>
         <div class='wrapper'>
           <div class='container'>
-            <center><h1>BookSmart</h1></center>
+            <center>
+              <h1>BookSmart</h1>
+            </center>
             <center>
               <form action="{{ url_for('search') }}" method="post" role="search">
                 <input class="form__field" name="name" id="name" placeholder="Enter a book title..." required />
@@ -32,6 +34,11 @@
                     </tr>
                 {% endfor %}
             </table></center>
+            {% else %}
+              <br>
+              <h3>Alternatively, you can <a href="{{ url_for('library') }}">search by library</a></h3>
+              <br>
+              <h3><a href="{{ url_for('login') }}">Log In</a></h3>
             {% endif %}
         </div>
       </div>

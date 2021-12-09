@@ -6,6 +6,7 @@ import requests
 # ---------- DATABASE CONSTANTS ---------- #
 
 # connect to the database with *the same* connection:
+
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
@@ -34,9 +35,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    attributes = ['a1', 'a2']
-    data = [['c1', 'c2'], ['c3', 'c4']]
-    return render_template('table.html', render_table=False, attributes=attributes, data=data)
+    return render_template('table.html', render_table=False, attributes=[], data=[])
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -50,12 +49,47 @@ def search():
     else:
         recommendations = None
 
-    # print(search_results)
-
     return render_template('book.html',
         book=search_result,
         found_any=found_any,
         recommendations=recommendations
+    )
+
+@app.route('/library')
+def library():
+    return render_template('library_search.html')
+
+@app.route('/library_search', methods=['POST'])
+def library_search():
+    name = request.form.get('name')
+
+    search_result = search_library(name)
+    found_any = search_result is not None
+
+    return render_template('library.html',
+        library=search_result,
+        found_any=found_any
+    )
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/authenticate', methods=['POST'])
+def authenticate():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    # NOTE: NEVER EVER EVER EVER EVER DO THIS!!! SO MANY THINGS WRONG WITH THIS
+    # we don't care because we have 2 hours to do this lol
+    query = "SELECT * FROM USERS WHERE EMAIL=%s AND PASSWORD=%s"
+    cur.execute(query, (email, password,))
+    user = cur.fetchone()
+    found = user is not None
+
+    return render_template('user_home.html',
+        found=found,
+        user=user
     )
 
 # ------------------------------ UTILS ------------------------------ #
@@ -63,9 +97,16 @@ def search():
 # https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
 
 def search_book(book):
-    #cur = DBconnection()
     query = "SELECT * FROM BOOKS WHERE title LIKE %(like)s ESCAPE '='"
     cur.execute(query, dict(like= '%'+book+'%'))
+
+    result = cur.fetchone()
+
+    return result
+
+def search_library(library):
+    query = "SELECT * FROM LIBRARIES WHERE Library LIKE %(like)s ESCAPE '='"
+    cur.execute(query, dict(like= '%'+library+'%'))
 
     result = cur.fetchone()
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'/>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+        <link rel='stylesheet' href='/static/styles.css'/>
+        <title>BookSmart</title>
+    </head>
+
+    <body>
+        <div class='wrapper'>
+          <div class='container'>
+            <center>
+              <h1>BookSmart</h1>
+              {% if found %}
+                <h2>Welcome, {{ user[1] }} {{ user[2] }}!</h2>
+                <br>
+                <!-- still have not done saved books -->
+                <h3>Here are your saved books:</h3>
+                <h4>Harry Potter and the Order of the Phoenix (Harry Potter  #5)</h4>
+                <h4>In a Sunburned Country</h4>
+                <h4>The Known World</h4>
+                <h4>God Emperor of Dune (Dune Chronicles  #4)</h4>
+                <h4>Tolstoy: Anna Karenina</h4>
+              {% else %}
+                <h2>No user found with that email and/or password.</h2>
+              {% endif %}
+            </center>
+        </div>
+      </div>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'/>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+        <link rel='stylesheet' href='/static/styles.css'/>
+        <title>BookSmart</title>
+    </head>
+
+    <body>
+        <div class='wrapper'>
+          <div class='container'>
+            <center><h1>BookSmart</h1></center>
+            <center>
+              <form action="{{ url_for('search') }}" method="post" role="search">
+                <input class="form__field" name="name" id="name" placeholder="Enter a book title..." required />
+                <input type="submit" style="display: none"/>
+              </form>
+            </center>
+
+            <center>
+              {% if not found_any %}
+                <h2>No results found. Please search again!</h2>
+              {% else %}
+                <br>
+                <h2>{{ library[1] }}</h2>
+                <h2>Address: {{ library[2] }}</h2>
+                <h2>Phone: {{ library[3] }}</h2>
+              {% endif %}
+            </center>
+        </div>
+      </div>
+    </body>
+</html>
