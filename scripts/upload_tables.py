@@ -33,8 +33,11 @@ def best_type(x):
 
 def upload_table(create_command, csv_path, table_name):
     # execute the commands:
-    cur.execute(create_command, ())
-    print('successfully created table %s' % table_name)
+    try:
+        cur.execute(create_command, ())
+        print('successfully created table %s' % table_name)
+    except:
+        print('table already exists or some other error')
 
     # CSV file to parse:
     CSV_PATH = os.path.dirname(__file__) + csv_path
@@ -65,7 +68,10 @@ def upload_table(create_command, csv_path, table_name):
 
             # the final command:
             command_template = 'INSERT INTO ' + table_name + ' VALUES ({});'.format(PLACEHOLDER)
-            cur.execute(command_template, args)
+            try:
+                cur.execute(command_template, args)
+            except:
+                print('something went wrong with insert number %d.' % i)
 
             # print every few insertions:
             if (i+1) % PRINT_EVERY == 0:

@@ -3,8 +3,6 @@ import psycopg2
 
 # ---------- DATABASE CONSTANTS ---------- #
 
-TABLE_NAME = 'books'
-
 # connect to the database with *the same* connection:
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
