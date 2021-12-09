@@ -6,7 +6,6 @@ import requests
 # ---------- DATABASE CONSTANTS ---------- #
 
 # connect to the database with *the same* connection:
-
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
@@ -39,6 +38,7 @@ def hello():
 
 @app.route('/search', methods=['POST'])
 def search():
+    update_cursors()
     name = request.form.get('name')
 
     search_result = search_book(name)
@@ -61,6 +61,7 @@ def library():
 
 @app.route('/library_search', methods=['POST'])
 def library_search():
+    update_cursors()
     name = request.form.get('name')
 
     search_result = search_library(name)
@@ -77,6 +78,7 @@ def login():
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
+    update_cursors()
     email = request.form.get('email')
     password = request.form.get('password')
 
@@ -91,6 +93,18 @@ def authenticate():
         found=found,
         user=user
     )
+
+def update_cursors():
+    global conn
+    global cur
+    try:
+        conn.close()
+        cur.close()
+    except:
+        pass
+
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = conn.cursor()
 
 # ------------------------------ UTILS ------------------------------ #
 #return information in array
