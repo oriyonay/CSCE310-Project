@@ -23,12 +23,17 @@
                 <h2>No results found. Please search again!</h2>
               {% else %}
                 <br>
-                <h2>{{ name }}</h2>
-                <h3>stuff goes here</h3>
+                <h2>{{ book[1] }}</h2>
+                <h3>By {{ book[2] }}</h3>
+                <h3>Rating: {{ book[3] }} stars ({{ book[8] }} ratings)</h3>
+                <h3>ISBN: {{ book[4] }}</h3>
+                <h3>{{ book[7] }} pages</h3>
+                <h3>Date published: {{ book[10]}}</h3>
+                <h3>Published by {{ book[11] }}</h3>
                 <br><br>
                 <h2>Users also liked:</h2>
                 {% for recommendation in recommendations %}
-                  <h4>book title goes here</h4>
+                  <h4>{{ recommendation[1] }}</h4>
                 {% endfor %}
               {% endif %}
             </center>
