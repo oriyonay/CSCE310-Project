@@ -6,13 +6,11 @@ import requests
 # ---------- DATABASE CONSTANTS ---------- #
 
 # connect to the database with *the same* connection:
-'''
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
+
 '''
-
-
 DB_NAME = 'd5rhvjkii4gu67'
 DB_USER = 'dvalsdjgojotpb'
 DB_PASS = 'dd1096e917e04d51125d1f74ee9d64858db26fb73cb66ad4c437a430fe0f2a92'
@@ -28,6 +26,7 @@ try:
 except:
     # log the error (will show up on log)
     print('unable to connect to the database.')
+'''
 
 # ---------- END OF DATABASE CONSTANTS ---------- #
 
