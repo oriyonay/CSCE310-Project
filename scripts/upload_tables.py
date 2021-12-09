@@ -8,10 +8,10 @@ import os.path
 
 # -------------------- CONNECT TO THE DATABASE -------------------- #
 
-DB_NAME = ''
-DB_USER = ''
-DB_PASS = ''
-DB_HOST = ''
+DB_NAME = 'd5rhvjkii4gu67'
+DB_USER = 'dvalsdjgojotpb'
+DB_PASS = 'dd1096e917e04d51125d1f74ee9d64858db26fb73cb66ad4c437a430fe0f2a92'
+DB_HOST = 'ec2-18-210-159-154.compute-1.amazonaws.com'
 PRINT_EVERY = 100
 
 # connect to the database:
@@ -69,7 +69,8 @@ def upload_table(create_command, csv_path, table_name):
 
             # print every few insertions:
             if (i+1) % PRINT_EVERY == 0:
-                print('successfully inserted %d rows to %s')
+                print('successfully inserted %d rows to %s' % (i+1, table_name))
+                conn.commit()
 
     print('successfully inserted all %d rows to %s' % (len(insert_commands), table_name))
 
