@@ -8,10 +8,10 @@ import os.path
 
 # -------------------- CONNECT TO THE DATABASE -------------------- #
 
-DB_NAME = 'd5rhvjkii4gu67'
-DB_USER = 'dvalsdjgojotpb'
-DB_PASS = 'dd1096e917e04d51125d1f74ee9d64858db26fb73cb66ad4c437a430fe0f2a92'
-DB_HOST = 'ec2-18-210-159-154.compute-1.amazonaws.com'
+DB_NAME = ''
+DB_USER = ''
+DB_PASS = ''
+DB_HOST = ''
 PRINT_EVERY = 100
 
 # connect to the database:
@@ -32,7 +32,7 @@ def best_type(x):
     return x
 
 def upload_table(create_command, csv_path, table_name):
-    # execute the commands:
+    # execute the create command:
     try:
         cur.execute(create_command, ())
         print('successfully created table %s' % table_name)
@@ -43,7 +43,6 @@ def upload_table(create_command, csv_path, table_name):
     CSV_PATH = os.path.dirname(__file__) + csv_path
 
     rows = []
-    commands = []
     with open(CSV_PATH) as f:
         r = csv.reader(f, delimiter=',')
 
@@ -51,6 +50,7 @@ def upload_table(create_command, csv_path, table_name):
         rows = next(r)
 
         PLACEHOLDER = ','.join(['%s'] * len(rows))
+        command_template = 'INSERT INTO ' + table_name + ' VALUES ({});'.format(PLACEHOLDER)
 
         # parse (and validate) entries in the file. use only valid entries:
         for i, entry in enumerate(r):
@@ -66,10 +66,10 @@ def upload_table(create_command, csv_path, table_name):
 
             args = tuple(args)
 
-            # the final command:
-            command_template = 'INSERT INTO ' + table_name + ' VALUES ({});'.format(PLACEHOLDER)
+            # execute the command:
+            cur.execute(command_template, args)
             try:
-                cur.execute(command_template, args)
+                pass # cur.execute(command_template, args)
             except:
                 print('something went wrong with insert number %d.' % i)
 
@@ -78,7 +78,7 @@ def upload_table(create_command, csv_path, table_name):
                 print('successfully inserted %d rows to %s' % (i+1, table_name))
                 conn.commit()
 
-    print('successfully inserted all %d rows to %s' % (len(insert_commands), table_name))
+    print('successfully inserted all %d rows to %s' % (i+1, table_name))
 
     print('committing changes to database...')
     conn.commit()
@@ -119,11 +119,11 @@ if __name__ == '__main__':
     users_table_name = 'USERS'
     users_csv = '/../data/users.csv'
 
-    create_command = 'CREATE TABLE %s ('\
+    users_create_command = 'CREATE TABLE %s ('\
         'UserID INT PRIMARY KEY,'\
         'FIRST_NAME VARCHAR,'\
         'LAST_NAME VARCHAR,'\
-        'EMAIL VARCHAR'\
+        'EMAIL VARCHAR,'\
         'PASSWORD VARCHAR'\
         ');' % (users_table_name)
 
