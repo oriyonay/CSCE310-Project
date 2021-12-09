@@ -41,17 +41,33 @@ def hello():
 def search():
     name = request.form.get('name')
 
-    # search_results = search_book(name)
+    search_results = search_book(name)
+    found_any = (len(search_results) != 0)
+
+    recommendations = ['a', 'b', 'c']
 
     # print(search_results)
 
-    return render_template('book.html', name=name)
+    return render_template('book.html',
+        name=name,
+        found_any=found_any,
+        recommendations=recommendations
+    )
 
 # ------------------------------ UTILS ------------------------------ #
-def search_book(book):
-    cur.execute('SELECT * FROM BOOKS WHERE title LIKE %(book)s', { 'book': '%{}%'.format(book)})
+#return information in array
+# https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
 
-    results = cur.fetchall()
+def search_book(book):
+    #cur = DBconnection()
+    #sql statement LIKE or CONTAINS
+    query = "SELECT * FROM BOOKS WHERE title LIKE %(like)s ESCAPE '='"
+    cur.execute(query, dict(like= '%'+book+'%'))
+
+    results = cur.fetchone()
+
+    for x in results:
+        print(x)
 
     return results
 
@@ -60,7 +76,7 @@ def search_book(book):
 def search_author(author_name):
     #mycursor = DBconnection()
 
-    query = "SELECT title, author, isbn, average_rating FROM BOOKS WHERE author LIKE " + author_name
+    query = "SELECT title, author, isbn, average_rating FROM BOOKS WHERE author SIMILAR TO \'" + author_name + "%\';"
 
     cur.execute(query)
 
@@ -101,7 +117,7 @@ def get_all_books():
 def get_rating_book(book):
     #mycursor = DBconnection()
 
-    query = "SELECT title, average_rating FROM BOOKS WHERE title LIKE " + book + ";"
+    query = "SELECT title, average_rating FROM BOOKS WHERE title SIMILAR TO \'" + book + "%\';"
 
     cur.execute(query)
 

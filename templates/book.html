@@ -19,7 +19,18 @@
             </center>
 
             <center>
-              <h2>TEST: you searched for {{ name }}</h2>
+              {% if not found_any %}
+                <h2>No results found. Please search again!</h2>
+              {% else %}
+                <br>
+                <h2>{{ name }}</h2>
+                <h3>stuff goes here</h3>
+                <br><br>
+                <h2>Users also liked:</h2>
+                {% for recommendation in recommendations %}
+                  <h4>book title goes here</h4>
+                {% endfor %}
+              {% endif %}
             </center>
         </div>
       </div>
